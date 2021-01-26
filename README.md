@@ -31,10 +31,10 @@ Change your `scripts` section to be as follows:
 
 ```json
 "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
-  },
+  "start": "node ./bin/www",
+  "devstart": "nodemon ./bin/www",
+  "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
+},
 ```
 
 ### Run the app
