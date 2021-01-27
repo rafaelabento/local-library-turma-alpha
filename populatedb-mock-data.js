@@ -75,8 +75,8 @@ function bookInstanceCreate(book, imprint, due_back, status, cb) {
 }
 
 
-function createGenreAuthors() {
-  async.parallel([
+function createGenreAuthors(cb) {
+  async.series([
     function(callback) {
       db.collection('authors').insertMany(authorsList, function(err, result) {
         if(err) {
@@ -110,69 +110,87 @@ function createGenreAuthors() {
 
 
 function createBooks() {
-  var genre = mongoose.model('Genre', Genre.GenreSchema)
-  var author = mongoose.model('Author', Author.AuthorSchema)
+  async.parallel([
+    function(callback){
+      var genre = mongoose.model('Genre', Genre.GenreSchema)
+      var author = mongoose.model('Author', Author.AuthorSchema)
 
-  genre.
-  find().
-  exec(function(err, allGenres){
-    if(err) {
-      console.log('Erro retrieving genres', err.message, err.stack)
-      return;
-    } 
-    // console.log('Genres', allGenres);
-    // allGenres = genres
-    author.
-    find().
-    exec(function(err, allAuthors) {
-      console.log(`${allAuthors.length} Authors retrieved`)
-      console.log(`${allGenres.length} Genres retrieved`)
+      genre.
+      find().
+      exec(function(err, allGenres){
+        if(err) {
+          console.log('Erro retrieving genres', err.message, err.stack)
+          return;
+        } 
+        // console.log('Genres', allGenres);
+        // allGenres = genres
+        author.
+        find().
+        exec(function(err, allAuthors) {
+          console.log(`${allAuthors.length} Authors retrieved`)
+          console.log(`${allGenres.length} Genres retrieved`)
 
-      booksList.forEach(book => {
-        // Generates random references
-        authorBook = allAuthors[Math.floor((Math.random() * allAuthors.length))]
-        genreBook = allGenres[Math.floor((Math.random() * allGenres.length))]
+          booksList.forEach(book => {
+            // Generates random references
+            authorBook = allAuthors[Math.floor((Math.random() * allAuthors.length))]
+            genreBook = allGenres[Math.floor((Math.random() * allGenres.length))]
 
-        bookCreate(book.title, book.summary, book.isbn, authorBook, genreBook, function() {
-          console.log(`Book created`);
+            bookCreate(book.title, book.summary, book.isbn, authorBook, genreBook, function() {
+              console.log(`Book created`);
+            });
+          }) 
         });
-      }) 
-    });
-  })  
-}
+      })  
+    },
+    function(results, err) {
+      if(err) {
+        console.log(`Books NOT added to the DB`, err.message, err.stack)
+      } else {
+        console.log(`Books ARE BEING added to the DB`, results.toString())
 
+      }
+    }
+  ]) 
+}
 
 function createBookInstances() {
-  var book = mongoose.model('Book', Book.GenreSchema)
+  async.parallel([
+    function(callback){
+      var book = mongoose.model('Book', Book.GenreSchema)
 
-  book.
-    find().
-    exec(function(err, allBooks){
-      if(err) {
-        console.log('Erro retrieving books', err.message, err.stack)
-        return;
-      } 
-    
-      console.log(`${allBooks.length} Books retrieved`)
-      console.log(`${bookInstancesList.length} Book instances from the local JSON`)
+      book.
+        find().
+        exec(function(err, allBooks){
+          if(err) {
+            console.log('Erro retrieving books', err.message, err.stack)
+            return;
+          } 
 
-      bookInstancesList.forEach(bookInstance => {
-        // Generates a random reference
-        bookReference = allBooks[Math.floor((Math.random() * allBooks.length))]
-        bookInstanceCreate(bookReference, bookInstance.imprint, false, bookInstance.status, function(err, bookInstaceCreated) {
-          if(err) console.log(`Book Instance NOT created`, err.message);
-          else console.log('Book Instance created')
+          bookInstancesList.forEach(bookInstance => {
+            // Generates a random reference
+            bookReference = allBooks[Math.floor((Math.random() * allBooks.length))]
+            bookInstanceCreate(bookReference, bookInstance.imprint, false, bookInstance.status, function(err, bookInstaceCreated) {
+              if(err) console.log(`Book Instance NOT created`, err.message);
+              else console.log('Book Instance created')
+            });
+          }) 
         });
-      }) 
-    });
+    },
+    function(results, err) {
+      if(err) {
+        console.log(`Books Instances NOT added to the DB`, err.message, err.stack)
+      } else {
+        console.log(`Books Instances ARE BEING added to the DB`, results.toString())
+
+      }
+    }
+  ]) 
 }
-
-
 
 async.series([
     createGenreAuthors,
     createBooks,
-    createBookInstances()
+    createBookInstances
 ],
 // Optional callback
 function(err, results) {
