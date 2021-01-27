@@ -40,5 +40,15 @@ Change your `scripts` section to be as follows:
 ### Run the app
 
 ```bash
-DEBUG=express-locallibrary-tutorial:* npm devstart
+npm run devstart
 ```
+
+## Setting up the database
+
+### Install Mongoose and MongoDB
+
+```bash
+npm install mongoose
+```
+
+We'll be using [MongoDB Atlas](https://www.mongodb.com/) cloud-based *database as a service* free tier to provide the database.
