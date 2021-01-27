@@ -70,3 +70,5 @@ Download the [`populatedb.js`](https://raw.githubusercontent.com/hamishwillee/ex
 ```bash
 node populatedb <your mongodb url>
 ```
+
+You can also use [Mockaroo](https://www.mockaroo.com/) to generate some mock data. Some are available in the `data/` folder
