@@ -11,7 +11,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // Set up mongoose connection
-var mongoDB = 'mongodb+srv://dba:PIKgN7bURpTxA7Re@cluster0.uiv1l.mongodb.net/local_library?retryWrites=true&w=majority'
+var mongoDB = 'mongodb+srv://dba:s2OuCobCglTtech6@cluster0.uiv1l.mongodb.net/local_library'
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 //Get the default connection
 var db = mongoose.connection;

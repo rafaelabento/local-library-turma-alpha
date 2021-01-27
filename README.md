@@ -53,3 +53,20 @@ npm install mongoose
 
 We'll be using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cloud-based *database as a service* free tier to provide the database. Go to the [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) page and create a free cluster.
 
+Go to the `Collections` tab and create a new database named `local_library` and enter the name of the collection as `Collection0`. Set the connection to `Allow Access from Anywhere`. 
+
+### Install `async` dependency
+
+The `async` dependency is used by the script that generates some random data.
+
+```bash
+npm install async
+```
+
+### Run the script do populate the database
+
+Download the [`populatedb.js`](https://raw.githubusercontent.com/hamishwillee/express-locallibrary-tutorial/master/populatedb.js) file in the root of your directory and run:
+
+```bash
+node populatedb <your mongodb url>
+```
