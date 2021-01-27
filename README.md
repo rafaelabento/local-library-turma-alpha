@@ -51,4 +51,5 @@ npm run devstart
 npm install mongoose
 ```
 
-We'll be using [MongoDB Atlas](https://www.mongodb.com/) cloud-based *database as a service* free tier to provide the database.
+We'll be using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cloud-based *database as a service* free tier to provide the database. Go to the [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) page and create a free cluster.
+

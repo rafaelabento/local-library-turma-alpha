@@ -3,11 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// Set up mongoose connection
+var mongoDB = 'mongodb+srv://dba:PIKgN7bURpTxA7Re@cluster0.uiv1l.mongodb.net/local_library?retryWrites=true&w=majority'
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
