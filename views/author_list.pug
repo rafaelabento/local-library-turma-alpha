@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div(class="Subhead")
+    div(class="Subhead-heading")= title
+
+  div(class="Box")
+    ul
+      each author in author_list
+        li(class="Box-row")
+          a(href=author.url) #{author.name}
+          |  (#{author.date_of_birth_formatted} - #{author.date_of_death_formatted})
+
+      else
+        li There are no authors.
