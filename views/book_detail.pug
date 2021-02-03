@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div(class="Subhead")
+    div(class="Subhead-heading") #{title}: #{book.title}
+
+  p #[strong Author: ]
+    a(href=book.author.url) #{book.author.name}
+  p #[strong Summary: ] #{book.summary}
+  p #[strong ISBN: ] #{book.isbn}
+  p #[strong Genre: ]
+    each val, index in book.genre
+      a(href=val.url) #{val.name}
+      if index < book.genre.length - 1
+        |,
+
+  div(style='margin-left:20px;margin-top:20px')
+  
+  div(class="Box")
+    div(class="Box-header")
+      h3(class="Box-title") Copies
+    ul
+      each val in book_instances
+        li(class="Box-row")
+          if val.status=='Available'
+            span(class="Label mr-1 Label--green" style="margin-bottom:5px") #{val.status}
+          else if val.status=='Maintenance'
+            span(class="Label mr-1 Label--yellow" style="margin-bottom:5px") #{val.status}
+          else
+            span(class="Label mr-1 Label--orange" style="margin-bottom:5px") #{val.status}
+          p #[strong Imprint:] #{val.imprint}
+          if val.status!='Available'
+            p #[strong Due back:] #{val.due_back}
+          p #[strong Id:]
+            a(href=val.url) #{val._id}
+
+      else
+        p There are no copies of this book in the library.

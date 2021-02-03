@@ -1,0 +1,20 @@
+extends layout
+
+block content
+
+  div(class="Subhead")
+    div(class="Subhead-heading") Author: #{author.name}
+    div(class="Subhead-description") #{author.date_of_birth_formatted} - #{author.date_of_death_formatted}
+
+  div(class="Box")
+    div(class="Box-header")
+      h3(class="Box-title") Books
+
+    ul
+      each book in author_books
+        li(class="Box-row")
+          a(href=book.url) #{book.title}
+        p(class="p-3") #{book.summary}
+
+      else
+        p(class="p-2") This author has no books.

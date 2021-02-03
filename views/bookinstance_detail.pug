@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  div(class="Subhead")
+    div(class="Subhead-heading") ID: #{bookinstance._id}
+
+  p #[strong Title: ]
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p #[strong Imprint: ] #{bookinstance.imprint}
+
+  p #[strong Status: ]
+    if bookinstance.status=='Available'
+      span(class="Label mr-1 Label--green") #{bookinstance.status}
+    else if bookinstance.status=='Maintenance'
+      span(class="Label mr-1 Label--yellow") #{bookinstance.status}
+    else
+      span(class="Label mr-1 Label--orange") #{bookinstance.status}
+
+  if bookinstance.status!='Available'
+    p #[strong Due back: ] #{bookinstance.due_back_formatted}
