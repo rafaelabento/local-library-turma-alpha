@@ -1,15 +1,17 @@
 extends layout
 
 block content
-  h1= title
+  div(class="Subhead")
+    div(class="Subhead-heading")= title
 
-  ul
-    - book_list.sort(function(a, b) { let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase();   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;      });
+  div(class="Box")
+    ul
+      - book_list.sort(function(a, b) { let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase();   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;      });
 
-    each book in book_list
-      li
-        a(href=book.url) #{book.title}
-        |  (#{book.author.name})
+      each book in book_list
+        li(class="Box-row")
+          a(href=book.url) #{book.title}
+          |  (#{book.author.name})
 
-    else
-      li There are no books.
+      else
+        li There are no books.
