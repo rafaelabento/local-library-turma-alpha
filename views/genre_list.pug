@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  div(class="Subhead")
+    div(class="Subhead-heading")= title
+
+  div(class="Box")
+    ul
+      each genre in genre_list
+        li(class="Box-row")
+          a(href=genre.url) #{genre.name}
+
+      else
+        li There are no genres.
