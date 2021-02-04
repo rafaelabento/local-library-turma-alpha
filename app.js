@@ -12,7 +12,11 @@ var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" 
 var app = express();
 
 // Set up mongoose connection
-var mongoDB = 'mongodb+srv://dba:s2OuCobCglTtech6@cluster0.uiv1l.mongodb.net/local_library'
+
+var db_passwd = process.env.npm_config_db_passwd;
+var db_url = process.env.npm_config_db_url;
+var mongoDB = 'mongodb+srv://dba:'+db_passwd+'@'+db_url;
+
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 //Get the default connection
 var db = mongoose.connection;

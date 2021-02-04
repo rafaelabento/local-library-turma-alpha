@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./bin/www $DB_URL $DB_PASSWD",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
+    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart $DB_URL $DB_PASSWD",
+    "demo": "echo \"Hello $npm_config_first $npm_config_last\""
   },
   "dependencies": {
     "@primer/css": "^15.2.0",
@@ -21,6 +22,6 @@
     "pug": "^3.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7" 
   }
 }

@@ -76,3 +76,11 @@ You can also use [Mockaroo](https://www.mockaroo.com/) to generate some mock dat
 ```bash
 npm install async
 ```
+
+## Running the application
+
+You will need to run your application providing MongoDB connection parameters. It should have the following pattern:
+
+```bash
+npm run serverstart --DB_PASSWD=<your_db_password> --DB_URL=<your_db_url>/<your_db_database>
+```
