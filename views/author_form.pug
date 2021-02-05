@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div(class="Subhead")
+    div(class="Subhead-heading")=title
+
+  form(method='POST' action='')
+    div.form-group
+      div.form-group-header
+        label(for='first_name') First Name: 
+      div.form-group-body
+        input#first_name.form-control.align-left(type='text' placeholder='First name (Christian)' name='first_name' required='true' value=(undefined===author ? '' : author.first_name) )
+    div.form-group
+      div.form-group-header
+        label(for='family_name') Family Name: 
+      div.form-group-body 
+        input#family_name.form-control(type='text' placeholder='Family name (surname)' name='family_name' required='true' value=(undefined===author ? '' : author.family_name))
+    div.form-group
+      div.form-group-header
+        label(for='date_of_birth') Date of birth: 
+      div.form-group-body
+        input#date_of_birth.form-control(type='date' name='date_of_birth' value=(undefined===author ? '' : author.date_of_birth) )
+        div.form-group
+      div.form-group-header
+        label(for='date_of_birth') Date of death: 
+      div.form-group-body
+        input#date_of_death.form-control(type='date' name='date_of_death' value=(undefined===author ? '' : author.date_of_death) )
+    button.btn.btn-primary(type='submit') Submit
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
