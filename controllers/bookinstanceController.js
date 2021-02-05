@@ -40,8 +40,6 @@ exports.bookinstance_create_get = function(req, res) {
 };
 
 // Handle BookInstance create on POST.
-exports.bookinstance_create_post = function(req, res) {
-    // Handle BookInstance create on POST.
 exports.bookinstance_create_post = [
 
     // Validate and sanitise fields.
@@ -84,7 +82,6 @@ exports.bookinstance_create_post = [
         }
     }
 ];
-};
 
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = function(req, res) {
