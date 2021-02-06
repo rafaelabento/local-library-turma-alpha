@@ -14,7 +14,11 @@ block content
       each book in author_books
         li(class="Box-row")
           a(href=book.url) #{book.title}
-        p(class="p-3") #{book.summary}
+        p.mb-2.ml-3 #{book.summary}
 
       else
-        p(class="p-2") This author has no books.
+        p.p-2 This author has no books.
+      
+  hr
+  p
+    a(href=author.url+'/delete') Delete author
