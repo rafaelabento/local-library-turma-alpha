@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  div(class="Subhead")
+    div(class="Subhead-heading") #{title}: #{book.title}
+    div(class="Subhead-description")= book.summary
+
+  if book_instances.length
+
+    div.flash.flash-error Delete the following book instances before attempting to delete this book
+    
+    br
+    
+    div(class="Box")
+      div(class="Box-header")
+        h3(class="Box-title") Book instances
+      
+      ul
+      each book_instance in book_instances
+        li(class="Box-row")
+          a(href=book_instance.url) #{book_instance._id} : #{book_instance.imprint}
+        p.mb-2.ml-3 #{book.summary}
+
+  else
+    p Do you really want to delete this Book?
+
+    form(method='POST' action='')
+      div.form-group
+        input#bookid.form-control(type='hidden',name='bookid', required='true', value=book._id )
+
+      button.btn.btn-primary(type='submit') Delete

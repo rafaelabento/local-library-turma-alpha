@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  div(class="Subhead")
+    div(class="Subhead-heading") Genre: #{genre.name}
+
+  if genres_books.length
+
+    div.flash.flash-error Delete the following books before attempting to delete this genre
+    
+    br
+    
+    div(class="Box")
+      div(class="Box-header")
+        h3(class="Box-title") Books
+      
+      ul
+      each book in genres_books
+        li(class="Box-row")
+          a(href=book.url) #{book.title}
+        p.mb-2.ml-3 #{book.summary}
+
+  else
+    p Do you really want to delete this Genre?
+
+    form(method='POST' action='')
+      div.form-group
+        input#genreid.form-control(type='hidden',name='genreid', required='true', value=genre._id )
+
+      button.btn.btn-primary(type='submit') Delete

@@ -16,3 +16,7 @@ block content
 
       else
         p(class="p-2") This genre has no books
+
+  hr
+  form(action=genre.url+'/delete')
+    button.btn.btn-danger(type='submit') Delete genre
