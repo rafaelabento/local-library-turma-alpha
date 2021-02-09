@@ -140,7 +140,7 @@ exports.author_delete_post = function(req, res, next) {
 exports.author_update_get = function(req, res) {
     
     // Get author, authors and genres for form.
-    Author.findById(req.params.id).exec(function(err, result) {
+    Author.findById(req.params.id).exec(function(err, author) {
         if (err) { return next(err); }
         if (result==null) { // No results.
             var err = new Error('Book not found');
@@ -148,7 +148,7 @@ exports.author_update_get = function(req, res) {
             return next(err);
         }
         // Success.
-        res.render('author_form', { title: 'Update Author', author: result, moment: moment });
+        res.render('author_form', { title: 'Update Author', author: author, moment: moment });
     });
 };
 
