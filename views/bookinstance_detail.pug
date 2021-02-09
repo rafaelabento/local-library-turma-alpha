@@ -21,5 +21,6 @@ block content
     p #[strong Due back: ] #{bookinstance.due_back_formatted}
 
   hr
-  form(action=bookinstance.url+'/delete')
-    button.btn.btn-danger(type='submit') Delete book instance
+  form(action=bookinstance.url+'/update')
+    button.btn.btn-danger.btn-outline.mr-2(type='submit') Update book instance
+    button.btn.btn-danger.mr-2(type='submit' formaction=bookinstance.url+'/delete') Delete book instance

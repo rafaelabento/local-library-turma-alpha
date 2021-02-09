@@ -20,5 +20,6 @@ block content
         p.p-2 This author has no books.
       
   hr
-  form(action=author.url+'/delete')
-    button.btn.btn-danger(type='submit') Delete author
+  form(action=author.url+'/update')
+    button.btn.btn-danger.btn-outline.mr-2(type='submit') Update author
+    button.btn.btn-danger.mr-2(type='submit' formaction=author.url+'/delete') Delete author

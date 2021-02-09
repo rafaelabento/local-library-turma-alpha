@@ -38,5 +38,6 @@ block content
         p There are no copies of this book in the library.
 
   hr
-  form(action=book.url+'/delete')
-    button.btn.btn-danger(type='submit') Delete book
+  form(action=book.url+'/update')
+    button.btn.btn-danger.btn-outline.mr-2(type='submit') Update book
+    button.btn.btn-danger.mr-2(type='submit' formaction=book.url+'/delete') Delete book

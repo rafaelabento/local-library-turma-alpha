@@ -18,5 +18,6 @@ block content
         p(class="p-2") This genre has no books
 
   hr
-  form(action=genre.url+'/delete')
-    button.btn.btn-danger(type='submit') Delete genre
+  form(action=genre.url+'/update')
+    button.btn.btn-danger.btn-outline.mr-2(type='submit') Update genre
+    button.btn.btn-danger.mr-2(type='submit' formaction=genre.url+'/delete') Delete genre
