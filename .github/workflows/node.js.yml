@@ -89,7 +89,7 @@ jobs:
 #         run: HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku create pedrolacerda-local-library
       - name: Set env variables
         run: |
-          HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku config:set NODE_ENV='production' -a pedrolacerda-local-library
+          HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku -a pedrolacerda-local-library config:set NODE_ENV='production'
           heroku config:set MONGODB_URI= ${{ env.DB_URI }}
       - name: Heroku push code
         run: git push heroku main
