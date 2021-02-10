@@ -8,15 +8,16 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    
 
 jobs:
   build:
-
+    name: Build and Test
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [10.x, 12.x, 14.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -27,4 +28,57 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: npm test --if-present
+  
+  
+  prettier:
+    name: 🧹 Prettier
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        # Make sure the actual branch is checked out when running on pull requests
+        ref: ${{ github.head_ref }}
+
+    - name: Prettify code
+      uses: creyD/prettier_action@v3.1
+      with:
+        # This part is also where you can pass other options, for example:
+        prettier_options: --write **/*.{js,md}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  
+  linter:
+    name: Lint code base
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+      # Run Linter against code base #
+      - name: 🧹 Lint Code Base
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_CSS: true
+          VALIDATE_MARKDOWN: true
+          JAVASCRIPT_DEFAULT_STYLE: prettier
+  
+  
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DB_URI:  ${ secrets.DB_URI }
+      
+    needs: [build, prettier, linter]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
