@@ -8,8 +8,7 @@
   "scripts": {
     "start": "node ./bin/www PORT=8000",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart",
-    "demo": "echo \"Hello $npm_config_first $npm_config_last\""
+    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
   },
   "dependencies": {
     "@primer/css": "^15.2.0",
