@@ -86,4 +86,4 @@ jobs:
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - name: Heroku Login
-        run: heroku --version
+        run: HEROKU_API_KEY=9f8ad002-5438-4609-b2b7-75070cb02539 heroku run ls --app pedrolacerda-local-library
