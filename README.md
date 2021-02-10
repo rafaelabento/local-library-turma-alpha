@@ -51,9 +51,9 @@ npm run devstart
 npm install mongoose
 ```
 
-We'll be using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cloud-based *database as a service* free tier to provide the database. Go to the [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) page and create a free cluster.
+We'll be using [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cloud-based _database as a service_ free tier to provide the database. Go to the [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) page and create a free cluster.
 
-Go to the `Collections` tab and create a new database named `local_library` and enter the name of the collection as `Collection0`. Set the connection to `Allow Access from Anywhere`. 
+Go to the `Collections` tab and create a new database named `local_library` and enter the name of the collection as `Collection0`. Set the connection to `Allow Access from Anywhere`.
 
 ### Install `async` dependency
 
