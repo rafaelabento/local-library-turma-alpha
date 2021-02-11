@@ -204,7 +204,10 @@ function createBookInstances() {
 }
 
 async.series(
-  [createGenreAuthors, createBooks, createBookInstances],
+  [
+    createGenreAuthors, 
+    createBooks, 
+    createBookInstances],
   // Optional callback
   function (err, results) {
     if (err) {
