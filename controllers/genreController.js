@@ -9,7 +9,7 @@ exports.genre_list = function (req, res) {
     .sort([["name", "ascending"]])
     .exec(function (err, list_genres) {
       if (err) {
-        return next(err);
+        return err;
       }
       //Successful, so render
       res.render("genre_list", {
