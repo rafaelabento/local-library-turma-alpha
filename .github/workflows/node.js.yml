@@ -77,6 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: production
       
     needs: [build, prettier]
     steps:
@@ -99,8 +100,8 @@ jobs:
       
       - name: Set env variables
         run: |
-          heroku config:set NODE_ENV='production'
-          heroku config:set MONGODB_URI= ${{ env.DB_URI }}
+          heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+          heroku config:set MONGODB_URI=${{ env.DB_URI }}
       
       - name: Push code to Heroku
         run: git push heroku main
