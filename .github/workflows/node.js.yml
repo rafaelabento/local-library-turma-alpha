@@ -99,9 +99,7 @@ jobs:
         run: heroku git:remote -a pedrolacerda-local-library
       
       - name: Push code to Heroku
-        run: |
-          git fetch --all --unshallow
-          git push heroku main
+        run: git push heroku main
       
 #       - name: Set env variables
 #         run: |
