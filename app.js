@@ -17,7 +17,7 @@ var dev_db_url =
 
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
 
-if(process.env.MONGODB_URI) mongoDB = "mongodb"+process.env.MONGODB_URI;
+if (process.env.MONGODB_URI) mongoDB = "mongodb" + process.env.MONGODB_URI;
 else mongoDB = dev_db_url;
 
 console.log(`======== mongoDB String: "${mongoDB}" ===========`);
