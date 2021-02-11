@@ -14,7 +14,7 @@ var app = express();
 // Set up mongoose connection
 var dev_db_url =
   "mongodb+srv://dba:s2OuCobCglTtech6@cluster0.uiv1l.mongodb.net/local_library?retryWrites=true";
-var mongoDB = process.env.MONGODB_URI || "mongodb"+dev_db_url;
+var mongoDB = process.env.MONGODB_URI || "mongodb" + dev_db_url;
 
 console.log(`======== mongoDB String: "${mongoDB}" ===========`);
 
