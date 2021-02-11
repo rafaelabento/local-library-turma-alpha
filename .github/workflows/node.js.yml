@@ -75,6 +75,8 @@ jobs:
   
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DB_URI: $${{ secrets.DB_URI }}
       
     needs: [build, prettier]
     steps:
