@@ -120,7 +120,7 @@ function createBooks() {
 
       genre.find().exec(function (err, allGenres) {
         if (err) {
-          console.log("Erro retrieving genres", err.message, err.stack);
+          console.log("Error retrieving genres", err.message, err.stack);
           return;
         }
         // console.log('Genres', allGenres);
@@ -166,7 +166,7 @@ function createBookInstances() {
 
       book.find().exec(function (err, allBooks) {
         if (err) {
-          console.log("Erro retrieving books", err.message, err.stack);
+          console.log("Error retrieving books", err.message, err.stack);
           return;
         }
 
