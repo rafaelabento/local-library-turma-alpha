@@ -91,17 +91,14 @@ jobs:
           heroku_app_name: pedrolacerda-local-library
           heroku_email: pedrohrl1@gmail.com
           justlogin: true
-        env:
-          HD_MONGODB_URI:  ${{ secrets.DB_URI }}
-          HD_NODE_ENV: production
       
       - name: Set Heroku remote
         run: heroku git:remote -a pedrolacerda-local-library
       
+      - name: Set env variables
+        run: |
+          heroku config:set NODE_ENV='production'
+          heroku config:set MONGODB_URI= ${{ env.DB_URI }}
+      
       - name: Push code to Heroku
         run: git push heroku main
-      
-#       - name: Set env variables
-#         run: |
-#           HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku -a pedrolacerda-local-library config:set NODE_ENV='production'
-#           heroku config:set MONGODB_URI= ${{ env.DB_URI }}
