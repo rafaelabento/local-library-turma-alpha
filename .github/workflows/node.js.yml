@@ -91,12 +91,12 @@ jobs:
         env:
           HD_MONGODB_URI:  ${{ secrets.DB_URI }}
           HD_NODE_ENV: production
-#       - name: Install Heroku CLI
-#         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       
       - name: Set Heroku remote
         run: heroku git:remote -a pedrolacerda-local-library
-
+      
+      - name: Push code to Heroku
+        run: git push heroku main
       
 #       - name: Set env variables
 #         run: |
