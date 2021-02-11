@@ -80,6 +80,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          # Full git history is needed to build on Heroku
+          fetch-depth: 0
       
       - name: Login Heroku
         uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
