@@ -76,23 +76,31 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      DB_URI:  ${{ secrets.DB_URI }}
+      
       
     needs: [build, prettier]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
       
-      - name: Install Heroku CLI
-        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-#       - name: Heroku Login and App create
-#         run: HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku create pedrolacerda-local-library
+      - name: Login Heroku
+        uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: pedrolacerda-local-library
+          heroku_email: pedrohrl1@gmail.com
+          justlogin: true
+        env:
+          HD_MONGODB_URI:  ${{ secrets.DB_URI }}
+          HD_NODE_ENV: production
+#       - name: Install Heroku CLI
+#         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      
+      - name: Set Heroku remote
+        run: heroku git:remote -a pedrolacerda-local-library
+
+      
 #       - name: Set env variables
 #         run: |
 #           HEROKU_API_KEY=${{ secrets.HEROKU_API_KEY }} heroku -a pedrolacerda-local-library config:set NODE_ENV='production'
 #           heroku config:set MONGODB_URI= ${{ env.DB_URI }}
-      - name: Heroku push code
-        run: |
-          cd ~
-          pwd
-#         run: heroku git:remote -a pedrolacerda-local-library
