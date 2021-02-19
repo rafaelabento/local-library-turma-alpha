@@ -32,7 +32,7 @@ jobs:
   
   
   prettier:
-    name: 🧹 Prettier
+    name: Prettier
     runs-on: ubuntu-latest
 
     steps:
@@ -51,26 +51,26 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   
-#   linter:
-#     name: Lint code base
-#     runs-on: ubuntu-latest
+  linter:
+    name: Lint code base
+    runs-on: ubuntu-latest
     
-#     steps:
-#       - name: Checkout Code
-#         uses: actions/checkout@v2
-#         with:
-#           # Full git history is needed to get a proper list of changed files within `super-linter`
-#           fetch-depth: 0
-#       # Run Linter against code base #
-#       - name: 🧹 Lint Code Base
-#         uses: github/super-linter@v3
-#         env:
-#           VALIDATE_ALL_CODEBASE: false
-#           DEFAULT_BRANCH: main
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           VALIDATE_CSS: true
-#           VALIDATE_MARKDOWN: true
-#           JAVASCRIPT_DEFAULT_STYLE: prettier
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to get a proper list of changed files within `super-linter`
+          fetch-depth: 0
+      # Run Linter against code base #
+      - name: Lint Code Base
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_CSS: true
+          VALIDATE_MARKDOWN: true
+          JAVASCRIPT_DEFAULT_STYLE: prettier
   
   
   deploy:
