@@ -7,15 +7,19 @@ on:
   push:
     branches: [ main ]
 jobs:
-  job1:
+  build:
     name: First job
     runs-on: ubuntu-latest
     steps:
       - name: checkout
       - uses: actions/checkout@v2
+    
+      - name: artfact
+        uses: actions/upload-artifact@v2.2.2
         with:
-        - name: artifact
-        - uses: actions/upload-artifact@v2.2.2
+          name: ${{env.ARTIFACT}}
+          path: .
+          if-no-files-found: error
     
 
 
