@@ -1,10 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
 name: data-atual
+
 on:
   push:
-    branches: [main]
-      
+    branches: [ main ]
+
 jobs:
   job1:
     name: First job
@@ -18,19 +19,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Step one
-        run: date 
-        
+        run: date        
   job3:
     name: Third job
-    runs-on: macos-latest
+    runs-on: macOS-latest
     steps:
       - name: Step one
         run: date
         
-    job4:
-    name: Finish
+  job4:
+    name: Finished job
     runs-on: ubuntu-latest
     needs: [job1, job2, job3]
     steps:
-      - name: Final step
+      - name: Finish
         run: echo "Final step"
