@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: First workflow
+
+on:
+  push:
+    branches:
+      -main
+      
+jobs:
+    job1:
+      name: First job
+       run-on: ubunto-latest
+       steps:
+        -name: Step one
+         run: date
+    job2:
+       name: Second job
+        run-on: windows-latest
+         steps:
+         -name: Step two
+          run: date
+    job3:
+       name: Third job
+        run-on: macos-latest
+         steps:
+         -name: Step three
+          run: date
+    job4:
+       name: Third job
+        run-on: macos-latest
+        needs: [job1,job2,job3]
+         steps:
+         -name: Final step
+          run: date
