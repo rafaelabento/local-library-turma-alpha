@@ -9,16 +9,15 @@ on:
   pull_request:
     branches: [ no-branch ]
     
-
 jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+#    strategy:
+#      matrix:
+#       node-version: [10.x, 12.x, 14.x]
+       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
@@ -91,12 +90,12 @@ jobs:
         uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: pedrolacerda-local-library
-          heroku_email: pedrohrl1@gmail.com
+          heroku_app_name: rafaelabento-local-library
+          heroku_email: rafaelasilveriobento@gmail.com
           justlogin: true
       
       - name: Set Heroku remote
-        run: heroku git:remote -a pedrolacerda-local-library
+        run: heroku git:remote -a rafaelabento-local-library
       
       - name: Set env variables
         run: |
