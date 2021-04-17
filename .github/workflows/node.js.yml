@@ -81,7 +81,50 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-  deploy:
+
+    - name: Login Heroku
+      uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
+      with:
+       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+       heroku_app_name: rafaelabento-local-library
+       heroku_email: rafaelasilveriobento@gmail.com
+       justlogin: true
+
+      
+  deploy-homologacao:
+    runs-on: ubuntu-latest
+    env:
+      DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: homologacao
+      
+    needs: [build, prettier]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          # Full git history is needed to build on Heroku
+          fetch-depth: 0
+      
+      - name: Login Heroku
+        uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: rafaelabento-local-library
+          heroku_email: rafaelasilveriobento@gmail.com
+          justlogin: true
+      
+      - name: Set Heroku remote
+        run: heroku git:remote -a rafaelabento-local-library
+      
+      - name: Set env variables
+        run: |
+          heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+          heroku config:set MONGODB_URI=${{ env.DB_URI }}
+
+      - name: Push code to Heroku
+        run: git push heroku main
+
+  deploy-producao:
     runs-on: ubuntu-latest
     env:
       DB_URI: $${{ secrets.DB_URI_PROD }}
@@ -109,7 +152,7 @@ jobs:
       - name: Set env variables
         run: |
           heroku config:set NODE_ENV=${{ env.NODE_ENV }}
-          heroku config:set MONGODB_URI=${{ env.DB_URI }}
-      
+          heroku config:set MONGODB_URI=${{ env.DB_URI_PROD }}
+
       - name: Push code to Heroku
         run: git push heroku main
