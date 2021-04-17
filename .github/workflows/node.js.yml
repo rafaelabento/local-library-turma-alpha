@@ -71,11 +71,20 @@ jobs:
           VALIDATE_MARKDOWN: true
           JAVASCRIPT_DEFAULT_STYLE: prettier
   
-  
+  deploy-hom:
+    name: Deploy Homologação
+    runs-on: ubuntu-latest
+    needs: [build-test, linter]
+    env:
+      DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: homologacao
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
   deploy:
     runs-on: ubuntu-latest
     env:
-      DB_URI: $${{ secrets.DB_URI }}
+      DB_URI: $${{ secrets.DB_URI_PROD }}
       NODE_ENV: production
       
     needs: [build, prettier]
