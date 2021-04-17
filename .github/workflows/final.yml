@@ -7,7 +7,7 @@ on:
   push:
     branches: [ no-branch ]
   pull_request:
-    branches: [ no-branch ]
+    branches: [ main ]
     workflow_dispatch:
     
 env:
