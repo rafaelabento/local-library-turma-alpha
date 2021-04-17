@@ -76,11 +76,12 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: rafaelabento-local-library
         heroku_email: rafaelasilveriobento@gmail.com
-        justlogin: true     
+        justlogin: true   
+        
     - name: Set Heroku remote
       run: heroku git:remote -a rafaelabento-local-library     
     - name: Set env variables
-       run:|
+      run: |
            heroku config:set NODE_ENV=${{ env.NODE_ENV }}
            heroku config:set MONGODB_URI=${{ env.DB_URI }}
 
