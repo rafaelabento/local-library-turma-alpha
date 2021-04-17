@@ -8,12 +8,12 @@ on:
     branches: [ no-branch ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+    workflow_dispatch:
     
 env:
   FILE_NAME: "Variavel"
   NODE_VERSION: "14.x"
-
+    
 jobs:
   build-test:
     name: Build and Test
@@ -21,53 +21,53 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-        
+
     - name: Upload
       uses: actions/upload-artifact@v2.2.2
       with:
         name: ${{ env.FILE_NAME }}
         path: .
-        
+
     - name: Set up Node.js version
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-    
+  
     - name: npm install, build, and test
       run: |
         npm install
         npm run build --if-present
-        npm run test --if-present        
+        npm run test --if-present    
   
-  linter:
-    name: Linter
-    runs-on: ubuntu-latest
-    steps:
+linter:
+  name: Lint code base
+  runs-on: ubuntu-latest
+  steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-      
-    - name: Super-Linter
-      uses: github/super-linter@v3.15.5
+      with:
+    - name: Lint Code Base
+      uses: github/super-linter@v3
       env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_CSS: true
-          VALIDATE_MARKDOWN: true
-          JAVASCRIPT_DEFAULT_STYLE: prettier
-      
-  deploy-hom:
-    name: Deploy Hom
-    runs-on: ubuntu-latest
-    needs: [build-test, linter]
-    env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VALIDATE_CSS: true
+        VALIDATE_MARKDOWN: true
+        JAVASCRIPT_DEFAULT_STYLE: prettier
+
+deploy-hom:
+  name: Deploy Hom
+  runs-on: ubuntu-latest
+   env:
       DB_URI: $${{ secrets.DB_URI }}
-      NODE_ENV: staging
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+      NODE_ENV: homologacao
+   needs: [build-test, linter]
+  steps:
+   - name: Checkout Code
+   uses: actions/checkout@v2
+   with:
+       fetch-depth: 0
       
     - name: Login Heroku
       uses: akhileshns/heroku-deploy@v3.10.9
@@ -75,48 +75,46 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: rafaelabento-local-library
         heroku_email: rafaelasilveriobento@gmail.com
-        justlogin: true
-    
+        justlogin: true     
     - name: Set Heroku remote
-      run: heroku git:remote -a rafaelabento-local-library
-      
+      run: heroku git:remote -a rafaelabento-local-library     
     - name: Set env variables
-      run: |
-        heroku config:set NODE_ENV=${{ env.NODE_ENV }}
-        heroku config:set MONGODB_URI=${{ env.DB_URI }}
-    
-    - name: Push code to Heroku
-      run: |
-        git fetch --all --unshallow
-        git push heroku main
-    
-  deploy-prod:
-    name: Deploy Produção
-    runs-on: ubuntu-latest
-    needs: [deploy-hom]
-    env:
-      DB_URI: $${{ secrets.DB_URI_PROD }}
-      NODE_ENV: production
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-      
-    - name: Login Heroku
-      uses: akhileshns/heroku-deploy@v3.10.9
-      with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: rafaelabento-local-library
-        heroku_email: rafaelasilveriobento@gmail.com
-        justlogin: true
-    
-    - name: Set Heroku remote
-      run: heroku git:remote -a rafaelabento-local-library
-      
-    - name: Set env variables
-      run: |
-        heroku config:set NODE_ENV=${{ env.NODE_ENV }}
-        heroku config:set MONGODB_URI=${{ env.DB_URI_PROD }}
-    
+        run: |
+            heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+            heroku config:set MONGODB_URI=${{ env.DB_URI }}
+
     - name: Push code to Heroku
       run: git push heroku main
-#startesteira
+
+deploy-prod:
+   name: Deploy Prod
+   runs-on: ubuntu-latest
+   env:
+     DB_URI: $${{ secrets.DB_URI_PROD }}
+     NODE_ENV: production
+      
+   needs: [deploy-hom]
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
+     
+    - name: Login Heroku
+      uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
+      with:
+         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+         heroku_app_name: rafaelabento-local-library
+         heroku_email: rafaelasilveriobento@gmail.com
+         justlogin: true
+      
+    - name: Set Heroku remote
+      run: heroku git:remote -a rafaelabento-local-library
+     
+    - name: Set env variables
+      run: |
+         heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+         heroku config:set MONGODB_URI=${{ env.DB_URI_PROD }}
+
+    - name: Push code to Heroku
+       run: git push heroku main
