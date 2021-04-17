@@ -8,59 +8,46 @@ on:
     branches: [ no-branch ]
   pull_request:
     branches: [ no-branch ]
+    workflow_dispatch:
+    
+env:
+  FILE_NAME: "Variavel"
+  NODE_VERSION: "14.x"
     
 jobs:
-  build:
+  build-test:
     name: Build and Test
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-       node-version: [10.x, 12.x, 14.x]
-       # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test --if-present
-  
-  
-  prettier:
-    name: Prettier
-    runs-on: ubuntu-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        # Make sure the actual branch is checked out when running on pull requests
-        ref: ${{ github.head_ref }}
 
-    - name: Prettify code
-      uses: creyD/prettier_action@v3.1
+    - name: Upload
+      uses: actions/upload-artifact@v2.2.2
       with:
-        # This part is also where you can pass other options, for example:
-        prettier_options: --write **/*.{js,md}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: ${{ env.FILE_NAME }}
+        path: .
+
+    - name: Set up Node.js version
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
   
+    - name: npm install, build, and test
+      run: |
+        npm install
+        npm run build --if-present
+        npm run test --if-present    
   
   linter:
     name: Lint code base
     runs-on: ubuntu-latest
     
+    
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
-      # Run Linter against code base #
       - name: Lint Code Base
         uses: github/super-linter@v3
         env:
@@ -70,39 +57,19 @@ jobs:
           VALIDATE_CSS: true
           VALIDATE_MARKDOWN: true
           JAVASCRIPT_DEFAULT_STYLE: prettier
-  
+
   deploy-hom:
-    name: Deploy Homologação
+  name: Deploy Hom
     runs-on: ubuntu-latest
+    env:
+      DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: homologacao
+      
     needs: [build-test, linter]
-    env:
-      DB_URI: $${{ secrets.DB_URI }}
-      NODE_ENV: homologacao
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-
-    - name: Login Heroku
-      uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
-      with:
-       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-       heroku_app_name: rafaelabento-local-library
-       heroku_email: rafaelasilveriobento@gmail.com
-       justlogin: true
-
-      
-  deploy-homologacao:
-    runs-on: ubuntu-latest
-    env:
-      DB_URI: $${{ secrets.DB_URI }}
-      NODE_ENV: homologacao
-      
-    needs: [build, prettier]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          # Full git history is needed to build on Heroku
           fetch-depth: 0
       
       - name: Login Heroku
@@ -124,19 +91,19 @@ jobs:
       - name: Push code to Heroku
         run: git push heroku main
 
-  deploy-producao:
+  deploy-prod:
+  name: Deploy Prod
     runs-on: ubuntu-latest
     env:
       DB_URI: $${{ secrets.DB_URI_PROD }}
       NODE_ENV: production
       
-    needs: [build, prettier]
+    needs: [deploy-hom]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          # Full git history is needed to build on Heroku
-          fetch-depth: 0
+           fetch-depth: 0
       
       - name: Login Heroku
         uses: akhileshns/heroku-deploy@v3.10.9 # This is the action
@@ -156,3 +123,4 @@ jobs:
 
       - name: Push code to Heroku
         run: git push heroku main
+
