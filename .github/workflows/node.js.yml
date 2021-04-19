@@ -51,10 +51,11 @@ jobs:
     name: Deploy Hom
     runs-on: ubuntu-latest
     needs: [build-test, linter]
+    environment:
+      name: 'rafaela-local-library-hom'
     env:
-       DB_URI: $${{ secrets.DB_URI }}
-       NODE_ENV: staging
-       
+      DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: staging
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
