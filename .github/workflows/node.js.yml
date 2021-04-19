@@ -57,6 +57,7 @@ jobs:
       name: 'rafaela-local-library-hom'
     env:
       DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: homolog
       
     steps:
     - name: Checkout Code
@@ -77,7 +78,7 @@ jobs:
 
     - name: Set env variables
       run: |
-           heroku config:set MONGODB_URI=${{ env.DB_URI }}
-           
+           heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+           heroku config:set MONGODB_URI=${{ env.DB_URI }}          
     - name: Push code to Heroku
       run: git push heroku main
