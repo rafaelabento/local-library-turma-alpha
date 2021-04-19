@@ -53,8 +53,8 @@ jobs:
     needs: [build-test, linter]
     env:
        DB_URI: $${{ secrets.DB_URI }}
-       NODE_ENV: homologacao
-  
+       NODE_ENV: staging
+       
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
