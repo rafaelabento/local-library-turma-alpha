@@ -73,8 +73,8 @@ jobs:
         heroku_email: rafaelasilveriobento@gmail.com
         justlogin: true   
         
-    #- name: Set Heroku remote
-    #  heroku git:remote -a projeto-final-rafaela
+    - name: Set Heroku remote
+        heroku git:remote -a projeto-final-rafaela
     
 #    - name: Set env variables
 #      run: |
