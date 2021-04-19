@@ -55,7 +55,7 @@ jobs:
       name: 'rafaela-local-library-hom'
     env:
       DB_URI: $${{ secrets.DB_URI }}
-      NODE_ENV: staging
+      
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
