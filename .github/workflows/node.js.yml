@@ -74,7 +74,8 @@ jobs:
         justlogin: true   
         
     - name: Set Heroku remote
-        heroku git:remote -a projeto-final-rafaela
+      run: heroku git:remote -a projeto-final-rafaela
+
     
 #    - name: Set env variables
 #      run: |
