@@ -5,13 +5,11 @@ name: Projeto Final
 
 on:
   push:
-    branches: [ no-branch ]
-  pull_request:
-    branches: [ main ]
+     branches: [ main ]
   workflow_dispatch:
     
 env:
-  NODE_VERSION: "14.x"
+   NODE_VERSION: "14.x"
     
 jobs:
   build-test:
@@ -39,14 +37,14 @@ jobs:
         npm run test --if-present    
   
   linter:
-    name: Lint code base
+    name: Linter code base
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
       
     - name: Lint Code Base
-      uses: github/super-linter@v3
+      uses: github/super-linter@v3.15.5
       env:
         VALIDATE_ALL_CODEBASE: false
         DEFAULT_BRANCH: main
@@ -54,7 +52,7 @@ jobs:
         VALIDATE_CSS: true
         VALIDATE_MARKDOWN: true
         JAVASCRIPT_DEFAULT_STYLE: prettier
-        
+
   deploy-hom:
     name: Deploy Hom
     runs-on: ubuntu-latest
@@ -73,15 +71,17 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.10.9
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: rafaelabento-local-library
+        heroku_app_name: projeto-final-rafaela
         heroku_email: rafaelasilveriobento@gmail.com
         justlogin: true   
         
     - name: Set Heroku remote
-      run: heroku git:remote -a projeto-final-rafaela     
+      run: heroku git:remote -a projeto-final-rafaela   
+
     - name: Set env variables
       run: |
            heroku config:set NODE_ENV=${{ env.NODE_ENV }}
            heroku config:set MONGODB_URI=${{ env.DB_URI }}
+           
     - name: Push code to Heroku
       run: git push heroku main
