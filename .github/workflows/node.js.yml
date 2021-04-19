@@ -11,7 +11,6 @@ on:
   workflow_dispatch:
     
 env:
-  FILE_NAME: "Variavel"
   NODE_VERSION: "14.x"
     
 jobs:
