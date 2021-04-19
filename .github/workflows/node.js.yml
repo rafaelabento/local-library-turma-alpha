@@ -55,8 +55,8 @@ jobs:
     needs: [build-test, linter]
     environment:
       name: 'projeto-final-rafaela-hom'
-    env:
-      DB_URI: $${{ secrets.DB_URI }}
+#    env:
+#      DB_URI: $${{ secrets.DB_URI }}
 #     NODE_ENV: homolog
       
     steps:
@@ -76,10 +76,10 @@ jobs:
     #- name: Set Heroku remote
     #  heroku git:remote -a projeto-final-rafaela
     
-    - name: Set env variables
-      run: |
-           heroku config:set MONGODB_URI=${{ env.DB_URI }}
- #         heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+#    - name: Set env variables
+#      run: |
+#           heroku config:set MONGODB_URI=${{ env.DB_URI }}
+#         heroku config:set NODE_ENV=${{ env.NODE_ENV }}
                
            
     - name: Push code to Heroku
