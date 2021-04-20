@@ -80,3 +80,37 @@ jobs:
            heroku config:set NODE_ENV=${{ env.NODE_ENV }}
     - name: Push code to Heroku
       run: git push heroku main
+      
+  deploy-prod:
+    name: Deploy Produção
+    runs-on: ubuntu-latest
+    needs: [deploy-hom]
+    environment:
+      name: 'PROD'
+    env:
+      DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: prod
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+      
+    - name: Login Heroku
+      uses: akhileshns/heroku-deploy@v3.10.9
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: rafaelabento-local-library-prod
+        heroku_email: rafaelasilveriobento@gamail.com
+        justlogin: true
+    
+    - name: Set Heroku remote
+      run: heroku git:remote -a projeto-final-rafaela
+      
+    - name: Set env variables
+      run: |
+        heroku config:set NODE_ENV=${{ env.NODE_ENV }}
+        heroku config:set MONGODB_URI=${{ env.DB_URI }}
+    
+    - name: Push code to Heroku
+      run: git push heroku main
