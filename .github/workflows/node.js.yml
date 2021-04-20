@@ -54,10 +54,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-test, linter]
     environment:
-      name: 'projeto-final-rafaela-hom'
-#    env:
-#      DB_URI: $${{ secrets.DB_URI }}
-#     NODE_ENV: homolog
+      name: 'HOM'
+    env:
+      DB_URI: $${{ secrets.DB_URI }}
+      NODE_ENV: homolog
       
     steps:
     - name: Checkout Code
@@ -77,11 +77,10 @@ jobs:
       run: heroku git:remote -a projeto-final-rafaela
 
     
-#    - name: Set env variables
-#      run: |
-#           heroku config:set MONGODB_URI=${{ env.DB_URI }}
-#         heroku config:set NODE_ENV=${{ env.NODE_ENV }}
-               
+    - name: Set env variables
+      run: |
+           heroku config:set MONGODB_URI=${{ env.DB_URI }}
+           heroku config:set NODE_ENV=${{ env.NODE_ENV }}
            
     - name: Push code to Heroku
       run: git push heroku main
