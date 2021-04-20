@@ -2,7 +2,7 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Projeto Final
-
+ 
 on:
   push:
     branches: [ main ]
@@ -71,15 +71,12 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: projeto-final-rafaela-hom
         heroku_email: rafaelasilveriobento@gmail.com
-        justlogin: true   
-        
+        justlogin: true
     - name: Set Heroku remote
       run: heroku git:remote -a projeto-final-rafaela
-         
     - name: Set env variables
       run: |
            heroku config:set MONGODB_URI=${{ env.DB_URI }}
            heroku config:set NODE_ENV=${{ env.NODE_ENV }}
-           
     - name: Push code to Heroku
       run: git push heroku main
