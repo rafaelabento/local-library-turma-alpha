@@ -57,7 +57,7 @@ jobs:
       name: 'HOM'
     env:
       DB_URI: $${{ secrets.DB_URI }}
-      NODE_ENV: homolog
+      NODE_ENV: hom
       
     steps:
     - name: Checkout Code
