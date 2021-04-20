@@ -69,7 +69,7 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.10.9
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: projeto-final-rafaela-hom
+        heroku_app_name: projeto-final-rafaela
         heroku_email: rafaelasilveriobento@gmail.com
         justlogin: true
     - name: Set Heroku remote
