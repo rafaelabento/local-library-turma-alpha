@@ -75,8 +75,7 @@ jobs:
         
     - name: Set Heroku remote
       run: heroku git:remote -a projeto-final-rafaela
-
-    
+         
     - name: Set env variables
       run: |
            heroku config:set MONGODB_URI=${{ env.DB_URI }}
