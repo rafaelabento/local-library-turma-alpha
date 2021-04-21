@@ -69,11 +69,11 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.10.9
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: projeto-final-rafaela
+        heroku_app_name: projeto-final-rafaela-hom
         heroku_email: rafaelasilveriobento@gmail.com
         justlogin: true
     - name: Set Heroku remote
-      run: heroku git:remote -a projeto-final-rafaela
+      run: heroku git:remote -a projeto-final-rafaela-hom
     - name: Set env variables
       run: |
            heroku config:set MONGODB_URI=${{ env.DB_URI }}
