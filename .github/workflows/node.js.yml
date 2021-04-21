@@ -4,10 +4,8 @@
 name: Projeto Final
  
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ no-branch ]
+    branches: [ main ]
   workflow_dispatch:
     
 env:
